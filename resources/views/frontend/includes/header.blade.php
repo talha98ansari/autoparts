@@ -155,7 +155,7 @@ $services_p = ServiceCategory::get();
                             <i class="fas fa-bars"></i>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav gap-4 ms-auto">
+                            <ul class="navbar-nav gap-1 ms-auto">
 
                                 <li class="nav-item">
                                     {{-- <select name="" id="" class="header-select vehicle_type">

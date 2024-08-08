@@ -29,13 +29,12 @@
     </section>
     <section id="category">
         <div class="container">
-
             <div class="row justify-content-center text-center">
-                {{-- <div class="col-md-8 col-lg-6">
+                <div class="col-md-8 col-lg-6">
                     <div class="header">
-                            <h3>Featured Product</h3>
-                        </div>
-            </div> --}}
+                        {{-- <h3>Featured Product</h3> --}}
+                    </div>
+                </div>
                 <div class="col-12 my-3">
                     <?php use App\Models\{PartType, Manufacturer};
                     $parttypes = PartType::get();
@@ -113,11 +112,11 @@
                     <div class="col-md-12">
                         <h1 class="text-center fs-2">Best <span class="orange-text">Selling</span>Parts</h1>
                     </div>
-                    @foreach ($data as $d)
-                        <div class="col-lg-6 col-md-12 d-flex">
-                            <div class="product-card my-2 d-flex">
-                                {{-- <div class="badge">Hot</div> --}}
-                                <a href="{{ route('part.detail', $d->id) }}" style="width:300px; min-width: 300px">
+                    {{-- @foreach ($data as $d)
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="product-card">
+                                 <div class="badge">Hot</div> 
+                                <a href="{{ route('part.detail', $d->id) }}" style="width:100%">
 
                                     <div class="product-tumb">
                                         @php $check = $d->images ?? [] @endphp
@@ -127,37 +126,89 @@
                                             @break;
                                         @endforeach
                                     @endif
-                                </div>
-                                <div class="product-details">
-                                    <span class="product-catagory">{{ $d->category->name ?? '' }} </span>
-                                    <h4><a
-                                            href="{{ route('part.detail', $d->id) }}">{{ substr($d->name ?? '', 0, 15) }}...</a>
-                                    </h4>
-                                    <p>{{ substr($d->description ?? '', 0, 100) }}...</p>
-                                    <div class="product-bottom-details">
-                                        <div class="product-price">
-                                            <p class="small">Starting From</p><small></small>{{ $d->price }}
-                                        </div>
-                                        <div class="product-links ">
-                                            <a class="hov"><span style="color: #FF4E00; font-size: 15px;">
-                                                    @if ($d->checkFav)
-                                                        <img src="{{ asset('/assets/img/heartfill.png') }}"
-                                                            id="ic" data-ct="{{ $d->id }}"width="18"
-                                                            data-status = '1'></i>
-                                                    @else
-                                                        <img id="ic" class=""
-                                                            src="{{ asset('/assets/img/heart.png') }}"
-                                                            data-ct="{{ $d->id }}" width="18"
-                                                            data-status = '0'></i>
-                                                    @endif
-                                                </span></a>
-                                        </div>
                                     </div>
-                            </a>
+                                    <div class="product-details">
+                                        <span class="product-catagory">{{ $d->category->name ?? '' }} </span>
+                                        <h4><a
+                                                href="{{ route('part.detail', $d->id) }}">{{ substr($d->name ?? '', 0, 15) }}...</a>
+                                        </h4>
+                                        <p>{{ substr($d->description ?? '', 0, 100) }}...</p>
+                                        <div class="product-bottom-details">
+                                            <div class="product-price">
+                                                <p class="small">Starting From</p><small></small>{{ $d->price }}
+                                            </div>
+                                            <div class="product-links ">
+                                                <a class="hov"><span style="color: #FF4E00; font-size: 15px;">
+                                                        @if ($d->checkFav)
+                                                            <img src="{{ asset('/assets/img/heartfill.png') }}"
+                                                                id="ic" data-ct="{{ $d->id }}"width="18"
+                                                                data-status = '1'></i>
+                                                        @else
+                                                            <img id="ic" class=""
+                                                                src="{{ asset('/assets/img/heart.png') }}"
+                                                                data-ct="{{ $d->id }}" width="18"
+                                                                data-status = '0'></i>
+                                                        @endif
+                                                    </span></a>
+                                            </div>
+                                        </div>
+                                </a>
                         </div>
                     </div>
             </div>
-            @endforeach
+            @endforeach --}}
+
+
+            <div class="row">
+                @foreach ($data as $d)
+                <div class="col-lg-6 col-12 my-3">
+                    <a  href="{{ route('part.detail', $d->id) }}" class="product_anchor">
+                        <div class="row align-items-center shadow ms-3">
+                            <div class="col-4 border_left">
+                                <div class="product_img">
+                                    @php $check = $d->images ?? [] @endphp
+                                    @if ($check != '' && !empty($check))
+                                        @foreach ($check as $c)
+                                            <img  src="{{ asset($c->path) }}" alt="" class="img-fluid">
+                                        @break;
+                                    @endforeach
+                                @endif
+                                </div>
+                            </div>
+                            <div class="col-8 bg-fa py-3 px-3" id="desc_produt">
+                                <div>
+                                    <small>{{ $d->category->name ?? '' }}</small>
+                                </div>
+                                <div>
+                                    <h3>{{ substr($d->name ?? '', 0, 15) }}...</h3>
+                                    <p>{{ substr($d->description ?? '', 0, 100) }}...</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="mb-0">Starting From</p>
+                                        <p class="mb-0">{{$d->price ?? ''}} AED</p>
+                                    </div>
+                                    <div>
+                                        @if ($d->checkFav)
+                                        <img src="{{ asset('/assets/img/heartfill.png') }}"
+                                        class="img-fluid w-25"
+                                            id="ic" data-ct="{{ $d->id }}"width="18"
+                                            data-status = '1'></i>
+                                    @else
+                                        <img id="ic" class="img-fluid w-25"
+                                            src="{{ asset('/assets/img/heart.png') }}"
+                                            data-ct="{{ $d->id }}" width="18"
+                                            data-status = '0'></i>
+                                    @endif       
+                                        {{-- <img src="http://127.0.0.1:8000/assets/img/heart.png" alt="" class="img-fluid w-25"> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @endforeach
+            </div>
 
             {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="product-card">
