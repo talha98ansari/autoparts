@@ -127,7 +127,36 @@ $(document).ready(function () {
         window.location.href = x;
 
     });
-    $(".searchButton2").on("click", function (e) {
+//     $(".searchButton2").on("click", function (e) {
+//         // Prevent the default form submission behavior
+//         e.preventDefault();
+
+//         // Get selected values from the dropdowns
+//         var vehicle_type = $(".vehicle_type").val();
+//         var statechange = $(".statechange").val();
+//         var manufacturer = $(".manufacturer").val();
+//         var maker = $(".maker_change_st").val();
+//         var price = $(".price").val();
+//         var x = '/view/part?';
+
+//         if (vehicle_type != null) {
+//             var x = x + 'vehicle_type=' + vehicle_type;
+//         }
+//         if (statechange != null) {
+//             var x = x + '&state=' + statechange;
+//         }
+
+//         if (price != null) {
+//             var x = x + '&price=' + price;
+//         }
+//         if (manufacturer != null) {
+//             var x = x + '&manufacturer=' + manufacturer;
+//         }
+//         window.location.href = x;
+
+//     });
+// });
+$(".searchButton2").on("click", function (e) {
         // Prevent the default form submission behavior
         e.preventDefault();
 
@@ -137,7 +166,15 @@ $(document).ready(function () {
         var manufacturer = $(".manufacturer").val();
         var maker = $(".maker_change_st").val();
         var price = $(".price").val();
-        var x = '/view/part?';
+        var model = $(".model").val();
+        var condition = $(".condition").val();
+        var url = window.location.href;
+
+        // Split the URL at the '?'
+        var baseUrl = url.split('?')[0];
+    
+        // Redirect to the base URL
+        var x = baseUrl + '?';
 
         if (vehicle_type != null) {
             var x = x + 'vehicle_type=' + vehicle_type;
@@ -145,12 +182,17 @@ $(document).ready(function () {
         if (statechange != null) {
             var x = x + '&state=' + statechange;
         }
-
+        if (model != null) {
+            var x = x + '&model=' + model;
+        }
         if (price != null) {
             var x = x + '&price=' + price;
         }
         if (manufacturer != null) {
             var x = x + '&manufacturer=' + manufacturer;
+        }
+        if (condition != null) {
+            var x = x + '&condition=' + condition;
         }
         window.location.href = x;
 

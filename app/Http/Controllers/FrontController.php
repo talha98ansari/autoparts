@@ -95,12 +95,36 @@ class FrontController extends Controller
     }
     public function partview(Request $request, $id = null)
     {
+       
+
         $partInfo = OtherPages::where('title', 'part_type')->first();
         $data = Part::where('is_active', 1);
 
+        //  $manufacturer_tb=Part::where('sub_cat', $id)->whereNotNull('manufacturer_name')->pluck('manufacturer_name')->toArray();
+        $manufacturers = Part::where('sub_cat', $id)
+  ->whereNotNull('manufacturer_name')
+  ->groupBy('manufacturer_name')
+  ->pluck('manufacturer_name')
+  ->toArray();
+
+$manufacturer_tb = [];
+foreach ($manufacturers as $manufacturer) {
+  $manufacturer_tb[$manufacturer] = Part::where('sub_cat', $id)
+                                           ->where('manufacturer_name', $manufacturer)
+                                           ->count();
+}
+        //  dd($manufacturer_tb);
+        // $manufacturer_tb = Part::select('manufacturer_name', \DB::raw('count(*) as manufacturer_count'))
+        //     // ->where('sub_cat', $id)
+        //     ->whereNotNull('manufacturer_name')
+        //     ->groupBy('manufacturer_name')
+        //     ->pluck('manufacturer_name', 'manufacturer_count')
+        //     ->toArray();
+
+
         if ($id != null) {
-            $data = $data->where('sub_cat', $id)->get();
-            return view('frontend.category', compact('data', 'partInfo'));
+            $data = $data->where('sub_cat', $id);
+            // return view('frontend.category', compact('data', 'partInfo','manufacturer_tb' , 'id'));
 
         }
 
@@ -116,7 +140,16 @@ class FrontController extends Controller
         $cat = $request->cat ?? '';
         $sub_cat = $request->subCat ?? '';
         $vehicle_type = $request->vehicle_type ?? '';
-        
+        $condition = $request->condition ?? '';
+        if ($model != null && !empty($request->all())) {
+            $data = $data->
+join('parts_multiple_product', 'parts.id', '=', 'parts_multiple_product.part_id')
+            ->where('parts_multiple_product.model_id', $model)
+            ;
+        }
+        if ($condition != null && !empty($request->all())) {
+            $data = $data->where('condition', '=', $condition);
+        } 
         if ($shopByMaker != null && !empty($request->all())) {
             $data = $data->where('maker_id', '!=', null);
         }
@@ -126,9 +159,7 @@ class FrontController extends Controller
         if ($shopByState != null && !empty($request->all())) {
             $data = $data->where('area', '!=', null);
         }
-        if ($model != null && !empty($request->all())) {
-            $data = $data->where('model', $model);
-        }
+        
         if ($state != null && !empty($request->all())) {
             $data = $data->where('area', $state);
         }
@@ -138,8 +169,9 @@ class FrontController extends Controller
         if ($maker_id != null && !empty($request->all())) {
             $data = $data->where('maker_id', $maker_id);
         }
+        // dd($manufacturer);
         if ($manufacturer != null && !empty($request->all())) {
-            $data = $data->where('manufacturer_id', $manufacturer);
+            $data = $data->where('manufacturer_name', $manufacturer);
         }
         if ($cat != null && !empty($request->all())) {
             $data = $data->where('category_id', $cat);
@@ -148,7 +180,7 @@ class FrontController extends Controller
             $data = $data->where('sub_cat', $sub_cat);
         }
         if ($shopByYear != null && !empty($request->all())) {
-        $data = $data->where('year' , 'LIKE' , '%'.$shopByYear.'%');
+            $data = $data->where('year', 'LIKE', '%' . $shopByYear . '%');
         }
         if ($price != null && !empty($request->all())) {
             $p = explode('-', $price);
@@ -159,9 +191,12 @@ class FrontController extends Controller
             }
             $data = $data->where('price', '<', $price2 . '00');
         }
+        
+        $data = $data->paginate(20)->withQueryString();
 
-        $data = $data->get();
-        return view('frontend.category', compact('data', 'partInfo'));
+
+
+        return view('frontend.category', compact('data', 'partInfo', 'manufacturer_tb', 'id'));
 
     }
 

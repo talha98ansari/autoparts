@@ -1,5 +1,183 @@
 @extends('frontend.includes.layout')
 @section('content')
+<style>
+    /* Base styles for the `.ct-find-service` container */
+    .mui-9qnkan:hover {
+        border-color: #FF4E00 !important;
+        /* Change this to your desired hover color */
+    }
+
+    .ct-find-service {
+        background: #00719b;
+        font-family: 'stenciletta-solid', sans-serif;
+        padding: 20px 25px;
+        margin: 50px 0 15px;
+        /* Adjust margins as needed */
+    }
+
+    /* Core styles for the `.mui-9qnkan` div */
+    .mui-9qnkan {
+        padding: 10px 16px;
+        background-color: rgb(255, 255, 255);
+        box-sizing: border-box;
+        border-radius: 40px;
+        display: flex;
+        /* Allow for flexbox layout */
+        flex-direction: row;
+        user-select: none;
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgb(224, 225, 227);
+        /* Set width to auto for content-based sizing */
+        width: auto;
+    }
+
+    /* Styles for active state (can be adjusted) */
+    .active {
+        background-color: rgb(255 78 0) !important;
+        color: white !important;
+        font-weight: 500 !important;
+    }
+
+    .active a,
+    .active span {
+        color: white !important;
+        font-weight: 400 !important;
+    }
+
+    /* Maintain existing styles for other classes */
+    .mui-8kezjs.custom-color a {
+        color: rgb(15, 93, 196);
+    }
+
+    .mui-1dzh1hm {
+        font-size: 14px;
+        line-height: 1;
+        font-weight: normal;
+        color: rgb(43, 45, 46);
+        white-space: nowrap;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mui-9qnkan .sub_label {
+        color: rgb(70, 76, 85);
+        margin-left: 4px;
+        line-height: 1%;
+    }
+
+    .active {
+        background-color: rgb(255 78 0) !important;
+        color: white !important;
+        font-weight: 500 !important;
+    }
+
+    .active a {
+        color: white !important;
+        font-weight: 400 !important;
+    }
+
+    .active span {
+        color: white !important;
+        font-weight: 400 !important;
+
+    }
+
+    .ct-find-service {
+        background: #00719b;
+        font-family: 'stenciletta-solid', sans-serif;
+        padding: 20px 25px;
+        margin-top: 50px;
+        margin-bottom: 15px;
+        margin-top: 0;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .ct-find-service h2 {
+        color: #fff;
+        font-size: 38px;
+    }
+
+    @media (min-width: 1200px) {
+        .ct-find-service {
+            padding: 20px 55px;
+        }
+    }
+
+    .ct-select-group {
+        margin: 0px 2px;
+        height: 64px;
+        margin-bottom: 15px;
+        position: relative;
+    }
+
+    .ct-select-group .ct-select {
+
+        width: 100%;
+        /* height: 64px; */
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        font-size: 18px;
+        /* border: none; */
+        background: transparent;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        cursor: pointer;
+        padding: 5px 14px;
+        border-radius: 1px;
+    }
+
+    .ct-select-group .ct-select option {
+        font-size: 16px;
+        background: #fff;
+        margin: 2px 5px;
+    }
+
+    .ct-select-group:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 64px;
+        width: calc(100% - 64px);
+        background: #fff;
+        z-index: 0;
+    }
+
+    .ct-select-group:after {
+        background-image: url('{{ asset('image.png') }}');
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 39px;
+        height: 39px;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 0;
+        background-color: #FF4E00;
+    }
+
+    select.form-select.condition.ct-select.ct-js-select {
+        font-size: 13px;
+        height: 40px;
+        padding: 10px 2px 6px 8px;
+        font-weight: 400;
+    }
+    .pagination .page-link {
+    font-size: 14px; /* Adjust size as needed */
+}
+
+svg.w-5.h-5 {
+    /* width: 16px; Adjust arrow size */
+    height: 16px;
+}
+</style>
     <section class="banner">
         <div class="banner-carousel2">
             <div class="item">
@@ -32,17 +210,22 @@
             <div class="row justify-content-center text-center">
                 <div class="col-md-8 col-lg-6">
                     <div class="header">
-                        {{-- <h3>Featured Product</h3> --}}
+                        <h3>Featured Product</h3>
                     </div>
                 </div>
-                <div class="col-12 my-3">
-                    <?php use App\Models\{PartType, Manufacturer};
+                <div class="">
+                    <?php
+                    use App\Models\{PartType, CarModel, Part};
                     $parttypes = PartType::get();
-                    $manufacturer = Manufacturer::get();
+                    $model_ids = CarModel::join('parts', 'parts.model', '=', 'car_model.id')->where('sub_cat', $id)->pluck('car_model.id')->toArray(); // Fetch all columns from car_model
+                    $model_ids = array_unique($model_ids);
+                    $model = CarModel::whereIn('id', $model_ids)->get();
+                    
                     ?>
-                    <div class="row">
-                        <div class=" col-md-2 col-sm-12 col-xs-12 my-2 my-md-0">
-                            <select class="form-select price" aria-label="Default select example">
+                    <div class="row d-flex justify-content-center ">
+                        <div
+                            class="custom-select col-md-2 col-sm-12 col-xs-12 my-2 my-md-0 ct-select-group ct-js-select-group">
+                            <select class="form-select price ct-select ct-js-select" aria-label="Default select example">
                                 <option value="" selected selected disabled>Sort By Price</option>
                                 <option {{ isset($_REQUEST['price']) && $_REQUEST['price'] == '100-500' ? 'selected' : '' }}
                                     value="100-500">100-500</option>
@@ -55,20 +238,11 @@
                                     value="1200+">1200-more</option>
                             </select>
                         </div>
-                        <div class=" col-md-3 col-sm-12 col-xs-12 my-2 my-md-0">
-                            <select class="form-select manufacturer" aria-label="Default select example">
-                                <option value="" selected disabled>Sort By Manufacturer</option>
-                                @foreach ($manufacturer as $m)
-                                    <option
-                                        {{ isset($_REQUEST['manufacturer']) && $_REQUEST['manufacturer'] == $m->id ? 'selected' : '' }}
-                                        value="{{ $m->id }}">{{ $m->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
 
 
-                        <div class=" col-md-2 col-sm-12 col-xs-12 my-2 my-md-0">
-                            <select class="form-select statechange" aria-label="Default select example">
+                        <div class=" col-md-2 col-sm-12 col-xs-12 my-2 my-md-0 ct-select-group ct-js-select-group">
+                            <select class="form-select statechange ct-select ct-js-select"
+                                aria-label="Default select example">
                                 <option value="" selected disabled>Select State</option>
                                 <option
                                     {{ isset($_REQUEST['state']) && $_REQUEST['state'] == 'AbuDhabi' ? 'selected' : '' }}
@@ -88,8 +262,9 @@
                                     value="Fujairah">Fujairah</option>
                             </select>
                         </div>
-                        <div class=" col-md-3 col-sm-12 col-xs-12 my-2 my-md-0">
-                            <select class="form-select vehicle_type" aria-label="Default select example">
+                        <div class=" col-md-3 col-sm-12 col-xs-12 my-2 my-md-0 ct-select-group ct-js-select-group">
+                            <select class="form-select vehicle_type ct-select ct-js-select"
+                                aria-label="Default select example">
                                 <option value="" selected disabled>Sort By Vechicle Type</option>
                                 @foreach ($parttypes as $m)
                                     <option
@@ -98,14 +273,48 @@
                                 @endforeach
                             </select>
                         </div>
-
+                        @if ($model->count() != 0)
+                            <div class=" col-md-2 col-sm-12 col-xs-12 my-2 my-md-0 ct-select-group ct-js-select-group">
+                                <select class="form-select model ct-select ct-js-select"
+                                    aria-label="Default select example">
+                                    <option value="" selected disabled>Sort By Model</option>
+                                    @foreach ($model as $m)
+                                        <option
+                                            {{ isset($_REQUEST['model']) && $_REQUEST['model'] == $m->id ? 'selected' : '' }}
+                                            value="{{ $m->id }}">{{ $m->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
+                        <div class=" col-md-1 col-sm-12 col-xs-12 my-2 my-md-0 ct-select-group ct-js-select-group">
+                            <select class="form-select condition ct-select ct-js-select"
+                                aria-label="Default select example">
+                                <option value="" selected disabled>New/Old </option>
+                                <option
+                                    {{ isset($_REQUEST['condition']) && $_REQUEST['condition'] == 'New' ? 'selected' : '' }}
+                                    value="New">New</option>
+                                <option
+                                    {{ isset($_REQUEST['condition']) && $_REQUEST['condition'] == 'Old' ? 'selected' : '' }}
+                                    value="Old">Old</option>
+                            </select>
+                        </div>
                         <div class=" col-md-1 col-sm-12 col-xs-12 my-2 my-md-0">
                             <button class="site-btn p-sm py-2 searchButton2" id="searchButton2"><i
                                     class="fas fa-search me-3"></i>
                                 Search</button>
                         </div>
                     </div>
+                    <div class="contianer d-flex justify-content-center align-items-stretch ">
+
+                        @foreach ($manufacturer_tb as $key => $m)
+                            <div class=" container MuiBox-root mui-9qnkan mx-1  {{ isset($_REQUEST['manufacturer']) && $_REQUEST['manufacturer'] == $key ? 'active' : '' }}"
+                                type="large"><a href={{ url('view/part/' . $id . '?&manufacturer=' . urlencode($key)) }}
+                                    class="mui-1dzh1hm ">{{ $key }} <span
+                                        class="sub_label">({{ $m }})</span> </a></div>
+                        @endforeach
+                    </div>
                 </div>
+
             </div>
             <div class="container-fluid">
                 <div class="row py-5">
@@ -208,8 +417,8 @@
                     </a>
                 </div>
                 @endforeach
+                {!! $data->links() !!}
             </div>
-
             {{-- <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="product-card">
                         <div class="badge">Hot</div>
