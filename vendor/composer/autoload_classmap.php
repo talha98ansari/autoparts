@@ -77,6 +77,7 @@ return array(
     'App\\Models\\OtherPages' => $baseDir . '/app/Models/OtherPages.php',
     'App\\Models\\ParentCategory' => $baseDir . '/app/Models/ParentCategory.php',
     'App\\Models\\Part' => $baseDir . '/app/Models/Part.php',
+    'App\\Models\\PartMultipleProduct' => $baseDir . '/app/Models/PartMultipleProduct.php',
     'App\\Models\\PartType' => $baseDir . '/app/Models/PartType.php',
     'App\\Models\\Partner' => $baseDir . '/app/Models/Partner.php',
     'App\\Models\\PartsType' => $baseDir . '/app/Models/PartsType.php',

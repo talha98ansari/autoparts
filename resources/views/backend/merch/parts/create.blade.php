@@ -49,21 +49,21 @@
                                 placeholder="{{ __('Name') }}" value="{{ old('name') }}" required autofocus>
 
                             @if ($errors->has('name'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('name') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('price') ? ' has-danger' : '' }} col-md-9">
                             <label class="form-control-label" for="input-price">{{ __('Price') }}</label>
-                            <input type="number" name="price" id="input-price"
+                            <input type="phone" name="price" id="input-price"
                                 class="form-control form-control-alternative{{ $errors->has('price') ? ' is-invalid' : '' }}"
                                 placeholder="{{ __('price') }}" value="{{ old('price') }}" required autofocus>
 
                             @if ($errors->has('price'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('price') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('price') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('category_id') ? ' has-danger' : '' }} col-md-9">
@@ -74,16 +74,16 @@
                                 placeholder="{{ __('category') }}" required autofocus>
                                 <option value="" selected disabled>Select Category</option>
 
-                                @foreach ($categories as $u )
-                                <option value="{{$u->id}}">
-                                    {{$u->name ?? ''}}
-                                </option>
+                                @foreach ($categories as $u)
+                                    <option value="{{ $u->id }}">
+                                        {{ $u->name ?? '' }}
+                                    </option>
                                 @endforeach
                             </select>
                             @if ($errors->has('category_id'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('category_id') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('category_id') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('sub_cat') ? ' has-danger' : '' }} col-md-9">
@@ -91,91 +91,92 @@
                                 for="input-sub_cat">{{ __('Select Sub Category') }}</label>
                             <select name="sub_cat" id="input-sub_cat"
                                 class="subCatDropDown form-control form-control-alternative{{ $errors->has('sub_cat') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('category') }}"  autofocus>
+                                placeholder="{{ __('category') }}" autofocus>
                                 <option value="" selected disabled>Select Sub Category</option>
 
-                                @foreach ($sub_categories as $u )
-                                <option value="{{$u->id}}">
-                                    {{$u->name ?? ''}}
-                                </option>
+                                @foreach ($sub_categories as $u)
+                                    <option value="{{ $u->id }}">
+                                        {{ $u->name ?? '' }}
+                                    </option>
                                 @endforeach
                             </select>
                             @if ($errors->has('sub_cat'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('sub_cat') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('sub_cat') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('manufacturer_id') ? ' has-danger' : '' }} col-md-9">
                             <label class="form-control-label"
                                 for="input-manufacturer_id">{{ __('Set Manufacturer Name') }}</label>
-                                   <input type="text" name="manufacturer_name" id="input-brand_name"
+                            <input type="text" name="manufacturer_name" id="input-brand_name"
                                 class="form-control form-control-alternative{{ $errors->has('brand_name') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('Manufacturer Name') }}" value="{{ old('brand_name') }}" required autofocus>
+                                placeholder="{{ __('Manufacturer Name') }}" value="{{ old('brand_name') }}" required
+                                autofocus>
 
                             {{-- <select name="manufacturer_name" id="input-manufacturer_id"
-                                class=" form-control form-control-alternative{{ $errors->has('manufacturer_id') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('category') }}" required autofocus>
-                                <option value="" selected disabled>Select Manufacturer</option> --}}
-{{--
-                                @foreach ($manufacturer as $u )
-                                <option value="{{$u->id}}">
-                                    {{$u->name ?? ''}}
-                                </option>
-                                @endforeach --}}
+                            class=" form-control form-control-alternative{{ $errors->has('manufacturer_id') ? ' is-invalid' : '' }}"
+                            placeholder="{{ __('category') }}" required autofocus>
+                            <option value="" selected disabled>Select Manufacturer</option> --}}
+                            {{--
+                            @foreach ($manufacturer as $u)
+                            <option value="{{$u->id}}">
+                                {{$u->name ?? ''}}
+                            </option>
+                            @endforeach --}}
                             </select>
                             @if ($errors->has('manufacturer_id'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('manufacturer_id') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('manufacturer_id') }}</strong>
+                                </span>
                             @endif
                         </div>
-                                <div class="form-group {{ $errors->has('maker') ? ' has-danger' : '' }} col-md-9">
+                        <div class="form-group {{ $errors->has('maker') ? ' has-danger' : '' }} col-md-9">
                             <label class="form-control-label" for="input-maker">{{ __('Select Maker') }}</label>
-                            <select name="maker_id" id="input-maker"
-                                class=" form-control   form-control-alternative{{ $errors->has('maker') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('') }}" required autofocus  >
-                                <option value=""  disabled>Select Maker</option>
-   <option value="0">
-                                   None
+                            <select name="maker_id[]" id=""
+                                class=" form-control   js-example-basic-single form-control-alternative{{ $errors->has('maker') ? ' is-invalid' : '' }}"
+                                placeholder="{{ __('') }}" required autofocus multiple>
+                                <option value="" disabled>Select Maker</option>
+                                <option value="0">
+                                    None
                                 </option>
-                                @foreach ($maker as $u )
-                                <option value="{{$u->id}}">
-                                    {{$u->name ?? ''}}
-                                </option>
+                                @foreach ($maker as $u)
+                                    <option value="{{ $u->id }}">
+                                        {{ $u->name ?? '' }}
+                                    </option>
                                 @endforeach
                             </select>
                             @if ($errors->has('maker'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('maker') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('maker') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('Model Name') ? ' has-danger' : '' }} col-md-9">
                             <label class="form-control-label" for="input-model_name">{{ __('Model Name') }}</label>
                             {{-- <input type="text" name="model" id="input-model_name"
-                                class="form-control form-control-alternative{{ $errors->has('model_name') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('Model Name') }}" value="{{ old('model_name') }}" required autofocus> --}}
-                                <select name="model" id="input-maker"
-                                class=" form-control form-control-alternative{{ $errors->has('maker') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('') }}" required autofocus>
+                            class="form-control form-control-alternative{{ $errors->has('model_name') ? ' is-invalid' : '' }}"
+                            placeholder="{{ __('Model Name') }}" value="{{ old('model_name') }}" required autofocus> --}}
+                            <select name="model[]" id=""
+                                class=" form-control js-example-basic-single form-control-alternative{{ $errors->has('maker') ? ' is-invalid' : '' }}"
+                                placeholder="{{ __('') }}" required autofocus multiple>
                                 <option value="" selected disabled>Select Model</option>
-  <option value="0">
-                                   None
+                                <option value="0">
+                                    None
                                 </option>
-                                @foreach ($models as $u )
-                                <option value="{{$u->id}}">
-                                    {{$u->name ?? ''}}
-                                </option>
+                                @foreach ($models as $u)
+                                    <option value="{{ $u->id }}">
+                                        {{ $u->name ?? '' }}
+                                    </option>
                                 @endforeach
                             </select>
 
 
 
                             @if ($errors->has('model_name'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('model_name') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('model_name') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('state') ? ' has-danger' : '' }} col-md-9">
@@ -193,9 +194,9 @@
                                 <option value="Fujairah">Fujairah</option>
                             </select>
                             @if ($errors->has('state'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('state') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('state') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('part_type_id') ? ' has-danger' : '' }} col-md-9">
@@ -206,30 +207,32 @@
                                 placeholder="{{ __('category') }}" required autofocus>
                                 <option value="" selected disabled>Select Part Type</option>
 
-                                @foreach ($partType as $u )
-                                <option value="{{$u->id}}">
-                                    {{$u->name ?? ''}}
-                                </option>
+                                @foreach ($partType as $u)
+                                    <option value="{{ $u->id }}">
+                                        {{ $u->name ?? '' }}
+                                    </option>
                                 @endforeach
                             </select>
                             @if ($errors->has('part_type_id'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('part_type_id') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('part_type_id') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('description') ? ' has-danger' : '' }} col-md-9">
                             <label class="form-control-label" for="input-description">{{ __('Description') }}</label>
                             <textarea type="" name="description" id="input-description"
                                 class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}"
-                                placeholder="{{ __('description') }}" value="{{ old('description') }}" required
-                                autofocus>{{ old('description') }}</textarea>
+                                placeholder="{{ __('description') }}" value="{{ old('description') }}" required autofocus>{{ old('description') }}</textarea>
                             @if ($errors->has('description'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('description') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('description') }}</strong>
+                                </span>
                             @endif
                         </div>
+
+
+
                         <div class="form-group {{ $errors->has('year') ? ' has-danger' : '' }} col-md-9">
                             <label class="form-control-label"
                                 for="input-part_type_id">{{ __('Select Year') }}</label>
@@ -238,32 +241,55 @@
                                 placeholder="{{ __('category') }}" required autofocus multiple>
 
                                 <option value="" disabled>Select Year</option>
-                                <?php $i=1960;
+                                <?php $i = 1960;
                                 $end = date('Y');
                                 ?>
 
-                                @for ($i ; $i<=$end; $i++)
+                                @for ($i; $i <= $end; $i++)
                                     <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                             </select>
                             @if ($errors->has('part_type_id'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('part_type_id') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('part_type_id') }}</strong>
+                                </span>
                             @endif
                         </div>
+
+
+
 
                         <div class="form-group {{ $errors->has('image') ? ' has-danger' : '' }} col-md-9">
-                            <label class="form-control-label" for="input-image">{{ __('Profile picture') }}</label>
-                            <input type="file" name="image" id="input-image"
-                                class="form-control form-control-alternative" placeholder="{{ __('image') }}">
+                            <label class="form-control-label" for="input-image">{{ __(' picture') }}
+                                <button class="btn btn-success addd_img" type="button"><i
+                                        class="glyphicon glyphicon-plus"></i>Add</button>
+                            </label>
+                            <div class="input-group control-group increment">
+                                <input type="file" name="image[]"
+                                    class="form-control form-control form-control-alternative">
+
+                            </div>
+                            <div class="clone d-none">
+                                <div class="control-group input-group" style="margin-top:10px">
+                                    <input type="file" name="image[]"
+                                        class="form-control form-control form-control-alternative">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-danger" type="button"><i
+                                                class="glyphicon glyphicon-remove"></i> Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             @if ($errors->has('image'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('image') }}</strong>
-                            </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('image') }}</strong>
+                                </span>
                             @endif
                         </div>
+
+
+
                         <div class="form-group {{ $errors->has('Location') ? ' has-danger' : '' }} col-md-9">
                             <label class="form-control-label" for="input-location">{{ __('Location') }}</label>
                             <input type="text" name="location" id="input-location"
@@ -281,6 +307,7 @@
                     <div class="text-right">
                         <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
                     </div>
+
                 </form>
 
             </div>

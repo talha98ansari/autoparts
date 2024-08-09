@@ -98,7 +98,6 @@ class FrontController extends Controller
        
 
         $partInfo = OtherPages::where('title', 'part_type')->first();
-        $data = Part::where('is_active', 1);
 
         //  $manufacturer_tb=Part::where('sub_cat', $id)->whereNotNull('manufacturer_name')->pluck('manufacturer_name')->toArray();
         $manufacturers = Part::where('sub_cat', $id)
@@ -120,6 +119,7 @@ foreach ($manufacturers as $manufacturer) {
         //     ->groupBy('manufacturer_name')
         //     ->pluck('manufacturer_name', 'manufacturer_count')
         //     ->toArray();
+        $data =new Part;
 
 
         if ($id != null) {
@@ -142,8 +142,7 @@ foreach ($manufacturers as $manufacturer) {
         $vehicle_type = $request->vehicle_type ?? '';
         $condition = $request->condition ?? '';
         if ($model != null && !empty($request->all())) {
-            $data = $data->
-join('parts_multiple_product', 'parts.id', '=', 'parts_multiple_product.part_id')
+            $data = $data->join('parts_multiple_product', 'parts.id', '=', 'parts_multiple_product.part_id')
             ->where('parts_multiple_product.model_id', $model)
             ;
         }
@@ -192,7 +191,7 @@ join('parts_multiple_product', 'parts.id', '=', 'parts_multiple_product.part_id'
             $data = $data->where('price', '<', $price2 . '00');
         }
         
-        $data = $data->paginate(20)->withQueryString();
+        $data = $data->select('parts.*')->paginate(20)->withQueryString();
 
 
 

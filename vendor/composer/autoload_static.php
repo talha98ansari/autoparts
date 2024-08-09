@@ -341,8 +341,8 @@ class ComposerStaticInitb2cd431c6c00f6cd7ecd83c27d25ee49
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -611,6 +611,7 @@ class ComposerStaticInitb2cd431c6c00f6cd7ecd83c27d25ee49
         'App\\Models\\OtherPages' => __DIR__ . '/../..' . '/app/Models/OtherPages.php',
         'App\\Models\\ParentCategory' => __DIR__ . '/../..' . '/app/Models/ParentCategory.php',
         'App\\Models\\Part' => __DIR__ . '/../..' . '/app/Models/Part.php',
+        'App\\Models\\PartMultipleProduct' => __DIR__ . '/../..' . '/app/Models/PartMultipleProduct.php',
         'App\\Models\\PartType' => __DIR__ . '/../..' . '/app/Models/PartType.php',
         'App\\Models\\Partner' => __DIR__ . '/../..' . '/app/Models/Partner.php',
         'App\\Models\\PartsType' => __DIR__ . '/../..' . '/app/Models/PartsType.php',

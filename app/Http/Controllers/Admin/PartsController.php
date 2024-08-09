@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Image;
+use App\Models\MultipleMaker;
+use App\Models\PartMultipleProduct;
 use Illuminate\Http\Request;
 use App\Models\{Part, partType, Category, SubCate, Manufacturer, CarModel, Maker, PartsType};
 use Illuminate\Support\Str;
@@ -49,6 +51,7 @@ class PartsController extends Controller
      */
     public function store(Request $request)
     {
+        
         $path = '';
         $year = is_array($request->year) ? implode(',' , $request->year) : $request->year;
         $data['year'] = $year;
@@ -60,13 +63,13 @@ class PartsController extends Controller
         $data['category_id'] = $request->category_id;
         $data['sub_cat'] = $request->sub_cat;
         $data['manufacturer_id'] = $request->manufacturer_id;
-        $data['model'] = $request->model;
-        $data['state'] = $request->model;
+        // $data['model'] = $request->model;
+        // $data['state'] = $request->model;
         $data['part_type_id'] = $request->part_type_id;
         $data['description'] = $request->description;
         $data['area'] = $request->state;
         $data['manufacturer_name'] = $request->manufacturer_name;
-        $data['maker_id'] = $request->maker_id;
+        // $data['maker_id'] = $request->maker_id;
         $data['mode_name'] = $request->model_name;
         $data['location'] = $request->location;
 
@@ -97,6 +100,17 @@ class PartsController extends Controller
                 $image = Image::create($i_data);
             }
         }
+        if(!empty($request->model)){
+            foreach($request->model as $m){
+                PartMultipleProduct::create(['part_id'=>$id->id , 'model_id' => $m]);
+            }
+        }
+            if(!empty($request->maker_id ) ){
+                foreach($request->maker_id as $m){
+                    MultipleMaker::create(['part_id'=>$id->id , 'maker_id' => $m]);
+                }
+            }
+        
         return redirect('admin/parts/')->with('success', 'Part Added!');
     }
 
@@ -178,19 +192,32 @@ class PartsController extends Controller
         $data['category_id'] = $request->category_id;
         $data['sub_cat'] = $request->sub_cat;
         $data['manufacturer_id'] = $request->manufacturer_id;
-        $data['model'] = $request->model;
-        $data['state'] = $request->model;
+        // $data['model'] = $request->model;
+        // $data['state'] = $request->model;
         $data['part_type_id'] = $request->part_type_id;
         $data['description'] = $request->description;
         $data['area'] = $request->state;
         $data['manufacturer_name'] = $request->manufacturer_name;
-        $data['maker_id'] = $request->maker_id;
+        // $data['maker_id'] = $request->maker_id;
         $data['mode_name'] = $request->model_name;
         $data['location'] = $request->location;
 
         $data['creator_id'] = Auth::user()->id;
 
         $part->update($data);
+        PartMultipleProduct::where('part_id' , $id)->delete();
+         if(!empty($request->model)){
+            foreach($request->model as $m){
+                PartMultipleProduct::create(['part_id'=>$id , 'model_id' => $m]);
+            }
+        }
+        MultipleMaker::where('part_id' , $id)->delete();
+            if(!empty($request->maker_id ) ){
+
+                foreach($request->maker_id as $m){
+                    MultipleMaker::create(['part_id'=>$id , 'maker_id' => $m]);
+                }
+            }
 
         return redirect('admin/parts')->with('success', 'Part Added!');
     }
