@@ -136,7 +136,6 @@
                             <select name="maker_id[]" id=""
                                 class=" form-control   js-example-basic-single form-control-alternative{{ $errors->has('maker') ? ' is-invalid' : '' }}"
                                 placeholder="{{ __('') }}" required autofocus multiple>
-                                <option value="" disabled>Select Maker</option>
                                 <option value="0">
                                     None
                                 </option>

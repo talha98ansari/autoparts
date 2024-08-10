@@ -131,8 +131,9 @@
                                 <select name="maker_id[]" id="input-maker"
                                     class=" form-control js-example-basic-single form-control-alternative{{ $errors->has('maker') ? ' is-invalid' : '' }}"
                                     placeholder="{{ __('') }}" required autofocus multiple>
-                                    <option value="" selected disabled>Select Maker</option>
-
+                                    <option value="0">
+                                        None
+                                    </option>
                                     @foreach ($maker as $u)
                                         <option value="{{ $u->id }}"
                                             {{ in_array($u->id, $data->getMaker()) ? 'selected' : '' }}>
@@ -151,7 +152,9 @@
                                 <select name="model[]" id="input-model"
                                     class="subCatDropDown js-example-basic-single form-control form-control-alternative{{ $errors->has('model') ? ' is-invalid' : '' }}"
                                     placeholder="{{ __('category') }}" multiple required autofocus>
-
+                                    <option value="0">
+                                        None
+                                    </option>
                                     @foreach ($models as $u)
                                         <option {{ in_array($u->id, $data->getModel()) ? 'selected' : '' }}
                                             value="{{ $u->id }}">
