@@ -216,11 +216,11 @@ $services_p = ServiceCategory::get();
                                     id="{{ 'MyAccountDDM' . $pc->id }}" data-bs-toggle="dropdown"
                                     data-bs-auto-close="outside" aria-expanded="false">{{ $pc->name }}</button>
 
-                                <ul class="dropdown-menu px-4 border border-danger parentUl"
+                                <ul class="dropdown-menu border border-danger parentUl"
                                     aria-labelledby="{{ 'MyAccountDDM' . $pc->id }}" id="{{ $pc->id }}">
                                     @foreach ($pc->childCategory($pc->id) as $child_category)
                                         <li>
-                                            <div class="btn-group dropend w-100">
+                                            <div class="btn-group px-4 py-2 dropend w-100">
                                                 <a type="button" class="dropdown-item d-block dropdown-toggle p-0"
                                                     data-bs-toggle="dropdown"
                                                     aria-expanded="false">{{ $child_category->name ?? '' }}</a>
@@ -234,7 +234,7 @@ $services_p = ServiceCategory::get();
                                                     $parts = array_count_values($parts);
                                                     ?>
                                                      @if(!empty($parts))
-                                                <ul class="dropdown-menu border border-danger">
+                                                <ul class="dropdown-menu border border-danger subMenu">
                                                    
                                                     @foreach ($parts as $categoryId => $count)
                                                         <?php $cat_id = Category::where('id', $categoryId)->first(); ?>
@@ -259,11 +259,11 @@ $services_p = ServiceCategory::get();
                                 data-bs-auto-close="outside" aria-expanded="false">Services</button>
                             <!-- Add position-relative here -->
 
-                            <ul class="dropdown-menu border border-danger" aria-labelledby="MyAccountDDM"
+                            <ul class="dropdown-menu border border-danger serviceMenu" aria-labelledby="MyAccountDDM"
                                 id="12">
                                 @foreach ($services_p as $sv)
-                                    <li class="px-4">
-                                        <a class="d-block"
+                                    <li class="py-2">
+                                        <a class="px-4 d-block"
                                             href= "{{ route('category.service', $sv->id) }}">{{ $sv->name }}</a>
                                         <!--<div class="btn-group dropend">-->
                                         <!--    <a type="button" class="dropdown-item dropdown-toggle p-0"-->
@@ -324,7 +324,7 @@ $services_p = ServiceCategory::get();
 <div class="drawer-wrap">
     <div id="drawer" class="position-fixed">
         <aside class="sidebar my-3">
-            <h4 class="text-center orange-text">Part Type</h4>
+            <h4 class="text-left orange-text ps-2">Part Type</h4>
             <ul class="list-unstyled mt-3">
                 @foreach ($parttypes as $m)
                     <li class="">

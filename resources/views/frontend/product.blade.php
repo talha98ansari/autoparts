@@ -1,7 +1,8 @@
 @extends('frontend.includes.layout')
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @section('content')
+
     <!-- Breadcrumb -->
     <div class="card">
         <nav style="--bs-breadcrumb-divider: '-';  background: #F4F4F4;
@@ -23,19 +24,23 @@
     <div class="container-fluid">
         <div class="text-center mt-4 ">
             <span>
-                <a class="btn text-white rounded-circle btn-sm1 "
-                    style="background-color: white; border-radius: 60%; border: 1px solid #FF4E00;"
-                    href="{{ Auth::user() && $data->creator ? 'tel:' . $data->creator->phone : '' }}" role="button"><i
+                <a class=" text-white rounded-circle"
+                    style="background-color: white; padding : 10px; border: 1px solid #FF4E00;"
+                    href="tel:{{ $data->creator->phone ?? '' }}" role="button"><i
                         class="fa-solid fa-phone " style="color: #FF4E00;"></i></a>
-                <a class="btn text-white rounded-circle btn-sm1 mx-3 "
-                    style="background-color: white; border-radius: 60%; border: 1px solid #FF4E00;" href="#!"
-                    role="button"><span style="color: #FF4E00; font-size: 15px;">
+                <a class=" text-white rounded-circle  mx-3 "
+                    style="background-color: white; padding : 10px; border: 1px solid #FF4E00;" href="#!"
+                    role="button">
+                    <span style="color: #FF4E00; font-size: 15px;">
                         @if ($data->checkFav)
-                            <img src="{{ asset('/assets/img/heartfill.png') }}" id="ic"
-                                data-ct="{{ $data->id }}"width="18" data-status = '1'></i>
+                            {{-- <img src="{{ asset('/assets/img/heartfill.png') }}" class="" id="ic"
+                                data-ct="{{ $data->id }}" data-status = '1'> --}}
+                                <i class="fa-solid fa-heart" id="ic"
+                                data-ct="{{ $data->id }}" data-status = '1'></i>
                         @else
-                            <img id="ic" class="" src="{{ asset('/assets/img/heart.png') }}"
-                                data-ct="{{ $data->id }}" width="18" data-status = '0'></i>
+                            {{-- <img id="ic" class="" src="{{ asset('/assets/img/heart.png') }}"
+                                data-ct="{{ $data->id }}"  data-status = '0'> --}}
+                                <i id="ic" class="fa-regular fa-heart" data-ct="{{ $data->id }}"  data-status = '0'></i>
                         @endif
                     </span></a>
 
@@ -47,7 +52,7 @@
 
             <div class="col-md-7  py-5 mt-5">
                 <div class="row">
-                    <div class="col-12 d-flex justify-content-center">
+                    <div class="col-md-12 d-flex justify-content-center">
                         {{-- <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                                 aria-labelledby="nav-home-tab"><img src="{{ asset($data->image) }}" class="img-fluid"
@@ -131,10 +136,15 @@
     <div class="gap d-flex mt-4"> <a href="{{route('user.login')}}" class="btn2 btn btn-lg text-white">Sign In To See
             Number</a>
         @else --}}
-                <div class="gap d-flex mt-4"> <a href="tel:{{ $data->creator->phone ?? '' }}"
+                <div class="gap d-flex mt-4"> 
+                    <a href="tel:{{ $data->creator->phone ?? '' }}"
                         class="btn2 btn btn-lg text-white">Phone
                         #
                         {{ $data->creator->phone ?? '' }}</a>
+                        <a href="tel:{{ $data->creator->phone ?? '' }}"
+                            class="btn2 btn btn-lg ms-3 text-white">Whatsapp
+                            #
+                            {{ $data->creator->phone ?? '' }}</a>
                     {{-- @endguest --}}
                     <a type="button" target="_blank"
                         href="{{ url($data->location ?? 'https://www.google.com/maps') }}"
